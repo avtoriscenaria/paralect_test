@@ -1,15 +1,11 @@
 import { createBrowserRouter } from "react-router-dom";
-import { NavBar } from "src/components";
-import { Auth, Home, Favorite, Vacancy } from "src/pages";
+import { App } from "src/App";
+import { Home, Favorite, Vacancy } from "src/pages";
 
 export const router = createBrowserRouter([
   {
-    path: "/auth",
-    Component: Auth,
-  },
-  {
     path: "/",
-    Component: NavBar,
+    Component: App,
     children: [
       {
         path: "/",
