@@ -1,0 +1,19 @@
+@import "./assets//colors.scss";
+
+.appContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  .pageContainer {
+    background-color: $mainBackGround;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    padding: 40px 12px 0 12px;
+    .pageWrapper {
+      max-width: 1124px;
+      width: 100%;
+    }
+  }
+}

@@ -1,0 +1,21 @@
+.homeContainer {
+  display: flex;
+  justify-content: center;
+
+  .vacanciesWrapper {
+    margin-left: 28px;
+    flex: 1;
+
+    .search {
+      width: 100%;
+      margin-bottom: 16px;
+    }
+
+    .vacancyPreviewContainer {
+      margin-bottom: 16px;
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+  }
+}

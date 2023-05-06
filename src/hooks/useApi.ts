@@ -38,7 +38,7 @@ export const useApi = (enpoint: EndpointType) => {
   return { request };
 };
 
-const makeUrl = (
+export const makeUrl = (
   url: string,
   queryData?: { [key: string]: string | undefined }
 ) => {

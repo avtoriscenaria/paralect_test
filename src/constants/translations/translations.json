@@ -1,0 +1,14 @@
+{
+  "vacancySearch": "Поиск вакансий",
+  "favorite": "Избранное",
+  "companyName": "Jobored",
+  "filters": "Фильтры",
+  "resetAll": "Сбросить всё",
+  "industry": "Отрасль",
+  "chooseIndustry": "Выберите отрасль",
+  "salary": "Оклад",
+  "from": "От",
+  "to": "До",
+  "apply": "Применить",
+  "vacancySearchPlaceholder": "Введите название вакансии"
+}

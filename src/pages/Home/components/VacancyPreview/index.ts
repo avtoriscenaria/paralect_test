@@ -1,0 +1,1 @@
+export { VacancyPreview } from "./VacancyPreview";

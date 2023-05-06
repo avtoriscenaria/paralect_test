@@ -1,0 +1,43 @@
+@import "../../../../assets//colors.scss";
+
+.filtersContainer {
+  width: 315px;
+  padding: 20px;
+  border-radius: 12px;
+  background-color: $secondBackGround;
+  color: $text;
+
+  .filtersHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    label {
+      font-size: 20;
+      font-weight: 700;
+    }
+
+    button {
+      background-color: transparent;
+      border: none;
+      font-size: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: $textGrey;
+      cursor: pointer;
+
+      svg {
+        margin-left: 4px;
+      }
+
+      &:hover {
+        opacity: 0.8;
+      }
+    }
+  }
+
+  .applyButton {
+    width: 100%;
+  }
+}
