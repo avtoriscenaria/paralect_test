@@ -1,0 +1,88 @@
+@import "../../assets/colors.scss";
+
+.selectorContainer {
+  label {
+    font-size: 16px;
+    font-weight: 700;
+  }
+
+  .selectorWrapper {
+    margin-top: 8px;
+    height: 42px;
+    border: 1px solid $disabled;
+    border-radius: 8px;
+    padding: 12px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+
+    .selectorLabel {
+      width: 100%;
+      font-size: 14px;
+      position: relative;
+      cursor: pointer;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      padding-right: 30px;
+
+      .selectorPlaceholder {
+        color: $textGrey;
+      }
+
+      .selectorArrow {
+        position: absolute;
+        top: 0;
+        right: 0;
+        color: $textGrey;
+        width: 24px;
+        height: 24px;
+      }
+    }
+
+    .selectorList {
+      display: none;
+      position: absolute;
+      background-color: white;
+      z-index: 10;
+      top: 42px;
+      left: 0;
+      max-height: 300px;
+      overflow: auto;
+      margin: 0;
+      padding: 10px;
+      list-style-type: none;
+
+      li {
+        padding: 4px;
+        cursor: pointer;
+
+        &:hover {
+          background-color: $defaultTheme;
+          color: white;
+          border-radius: 8px;
+        }
+      }
+    }
+  }
+
+  &.open {
+    .selectorWrapper {
+      border-color: $defaultTheme;
+      .selectorLabel {
+        color: $defaultTheme;
+        .selectorArrow {
+          transform: rotate(180deg);
+        }
+
+        .selectorPlaceholder {
+          color: $textGrey;
+        }
+      }
+      .selectorList {
+        display: block;
+      }
+    }
+  }
+}

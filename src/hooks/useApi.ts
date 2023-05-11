@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
-import { HOST, SECRET_KEY_PARALECT } from "src/constants";
+import { HOST, SECRET_KEY, SECRET_KEY_PARALECT } from "src/constants";
+import { useAuthContext } from "src/context/AuthContext";
 
 interface EndpointType {
   url: string;
@@ -14,9 +15,11 @@ interface PropTypes {
 
 export const useApi = (enpoint: EndpointType) => {
   const [isLoading, setIsLoading] = useState(false);
+  const { authToken } = useAuthContext();
 
   const request = useCallback(
-    async ({ query }: PropTypes) => {
+    async (params?: PropTypes) => {
+      const { query } = params || {};
       if (isLoading) {
         return;
       }
@@ -25,17 +28,19 @@ export const useApi = (enpoint: EndpointType) => {
         method: enpoint.method,
         headers: {
           "x-secret-key": SECRET_KEY_PARALECT,
+          "X-Api-App-Id": SECRET_KEY,
           "Content-Type": "application/x-www-form-urlencodedn",
+          //Authorization: `Bearer ${authToken}`,
         },
-      }).then((res) => res.json());
+      }).then((res) => (res.ok ? res.json() : res));
 
-      console.log("res!!!!!!!!!!!!", res);
       setIsLoading(false);
+      return res;
     },
     [enpoint.method, enpoint.url, isLoading]
   );
 
-  return { request };
+  return { request, isLoading };
 };
 
 export const makeUrl = (

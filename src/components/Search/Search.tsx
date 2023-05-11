@@ -3,10 +3,16 @@ import {
   TextInputProps,
   ActionIcon,
   useMantineTheme,
+  Button,
 } from "@mantine/core";
 import { IconSearch, IconArrowRight, IconArrowLeft } from "@tabler/icons-react";
+import "./styles.scss";
 
-export function InputWithButton(props: TextInputProps) {
+interface PropTypes extends TextInputProps {
+  submitlabel?: string;
+}
+
+export function InputWithButton(props: PropTypes) {
   const theme = useMantineTheme();
 
   return (
@@ -15,22 +21,21 @@ export function InputWithButton(props: TextInputProps) {
       radius="xl"
       size="md"
       rightSection={
-        <ActionIcon
-          size={32}
+        <Button
           radius="xl"
           color={theme.primaryColor}
           variant="filled"
+          className="submitButton"
         >
-          {theme.dir === "ltr" ? (
-            <IconArrowRight size="1.1rem" stroke={1.5} />
-          ) : (
-            <IconArrowLeft size="1.1rem" stroke={1.5} />
-          )}
-        </ActionIcon>
+          {props.submitlabel}
+        </Button>
       }
       placeholder="Search questions"
-      rightSectionWidth={42}
+      rightSectionWidth={"auto"}
       {...props}
+      className={`searchContainer${
+        props.className ? " " + props.className : ""
+      }`}
     />
   );
 }

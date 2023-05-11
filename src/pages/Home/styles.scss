@@ -1,9 +1,12 @@
 .homeContainer {
   display: flex;
   justify-content: center;
+  height: 100%;
 
   .vacanciesWrapper {
     margin-left: 28px;
+    display: flex;
+    flex-direction: column;
     flex: 1;
 
     .search {
@@ -11,11 +14,17 @@
       margin-bottom: 16px;
     }
 
-    .vacancyPreviewContainer {
-      margin-bottom: 16px;
-      &:last-child {
-        margin-bottom: 0;
-      }
+    .vacanсiesList {
+      overflow: auto;
+      padding-bottom: 40px;
+      flex: 1;
+    }
+
+    .paginationWrapper {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 12px 0;
     }
   }
 }

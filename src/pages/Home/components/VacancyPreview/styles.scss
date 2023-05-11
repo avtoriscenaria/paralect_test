@@ -6,4 +6,65 @@
   padding: 24px;
   border-radius: 12px;
   background-color: $secondBackGround;
+  margin-bottom: 16px;
+  display: flex;
+  justify-content: space-between;
+  color: $text;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+
+  .infoWrapper {
+    label {
+      font-size: 20px;
+      font-weight: 600;
+      color: $defaultTheme;
+      margin-right: 12px;
+      cursor: pointer;
+
+      &:hover {
+        opacity: 0.8;
+      }
+    }
+
+    p {
+      font-size: 16px;
+      margin: 12px 0;
+
+      b {
+        margin-right: 12px;
+      }
+
+      span {
+        margin-left: 12px;
+      }
+    }
+
+    .locationWrapper {
+      display: flex;
+      align-items: center;
+
+      img {
+        margin-right: 12px;
+      }
+    }
+  }
+
+  .iconWrapper {
+    svg {
+      color: $textGrey;
+      cursor: pointer;
+      user-select: none;
+
+      &.selected {
+        color: $defaultTheme;
+        fill: $defaultTheme;
+      }
+
+      &:hover {
+        opacity: 0.8;
+      }
+    }
+  }
 }

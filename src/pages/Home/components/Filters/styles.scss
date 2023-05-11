@@ -6,14 +6,16 @@
   border-radius: 12px;
   background-color: $secondBackGround;
   color: $text;
+  height: fit-content;
 
   .filtersHeader {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    margin-bottom: 32px;
 
     label {
-      font-size: 20;
+      font-size: 20px;
       font-weight: 700;
     }
 
@@ -37,7 +39,20 @@
     }
   }
 
+  .priceSelectors {
+    margin-top: 20px;
+
+    label {
+      font-weight: 700;
+      font-size: 16px;
+    }
+    .priceSelector {
+      margin-top: 8px;
+    }
+  }
+
   .applyButton {
     width: 100%;
+    margin-top: 20px;
   }
 }

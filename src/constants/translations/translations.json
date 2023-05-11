@@ -10,5 +10,7 @@
   "from": "От",
   "to": "До",
   "apply": "Применить",
-  "vacancySearchPlaceholder": "Введите название вакансии"
+  "vacancySearchPlaceholder": "Введите название вакансии",
+  "sallaryShort": "з/п",
+  "search": "Поиск"
 }

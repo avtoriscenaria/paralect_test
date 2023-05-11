@@ -1,4 +1,5 @@
-export const HOST = "https://startup-summer-2023-proxy.onrender.com/2.0";
+export { api, HOST } from "./api";
+
 // @ts-ignore
 export const LOGIN: string = process.env.REACT_APP_LOGIN;
 // @ts-ignore
@@ -11,8 +12,19 @@ export const SECRET_KEY: string = process.env.REACT_APP_SECRET_KEY;
 export const SECRET_KEY_PARALECT: string =
   process.env.REACT_APP_SECRET_KEY_PARALECT;
 
-export const api = {
-  auth: {
-    login: { url: "/oauth2/password", method: "GET" },
-  },
+export const LS_ALIAS = {
+  auth_data: "authData",
+  favorites: "favorites",
 };
+
+export const salaries = [
+  "10000",
+  "20000",
+  "30000",
+  "40000",
+  "50000",
+  "70000",
+  "1000000",
+  "150000",
+  "200000",
+];

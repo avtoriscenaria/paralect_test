@@ -6,9 +6,11 @@ import React, {
   useState,
   useCallback,
 } from "react";
+import { Loader } from "src/components";
 import {
   CLIENT_ID,
   LOGIN,
+  LS_ALIAS,
   PASSWORD,
   SECRET_KEY,
   SECRET_KEY_PARALECT,
@@ -44,20 +46,27 @@ export const AuthContextProvider = ({
     []
   );
   const fetchAuthToken = useCallback(async () => {
-    setIsFetching(true);
-    const res = await fetch(authQuery, {
-      method: api.auth.login.method,
-      headers: {
-        "x-secret-key": SECRET_KEY_PARALECT,
-        "Content-Type": "application/x-www-form-urlencodedn",
-      },
-    }).then((res) => res.json());
+    const authData = localStorage.getItem(LS_ALIAS.auth_data);
 
-    console.log("res!!!!!!!!!!!!", res);
-    if (res.access_token) {
-      setAuthToken(res.access_token);
+    if (authData) {
+      setAuthToken(JSON.parse(authData).access_token);
+    } else {
+      setIsFetching(true);
+      const res = await fetch(authQuery, {
+        method: api.auth.login.method,
+        headers: {
+          "x-secret-key": SECRET_KEY_PARALECT,
+          "Content-Type": "application/x-www-form-urlencodedn",
+        },
+      }).then((res) => res.json());
+
+      console.log("res!!!!!!!!!!!!", res);
+      if (res.access_token) {
+        localStorage.setItem(LS_ALIAS.auth_data, JSON.stringify(res));
+        setAuthToken(res.access_token);
+      }
+      setIsFetching(false);
     }
-    setIsFetching(false);
   }, [authQuery]);
 
   useEffect(() => {
@@ -73,7 +82,7 @@ export const AuthContextProvider = ({
         authToken,
       }}
     >
-      {children}
+      {authToken ? children : <Loader />}
     </AuthContext.Provider>
   );
 };
