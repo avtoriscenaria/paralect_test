@@ -5,12 +5,10 @@ export const useOnClickOutside = (ref: any, handler: () => void) => {
   useEffect(() => {
     if (!isEventAdded) {
       setIsEventAdded(true);
-
-      ["click", "touchstart"].forEach(() => {
-        document.addEventListener(`click`, (evt) => {
-          if (ref.current.contains(evt.target)) return;
-          handler();
-        });
+      document.addEventListener("click", (evt) => {
+        if (ref?.current?.contains && ref?.current?.contains(evt.target))
+          return;
+        handler();
       });
     }
   }, [ref, handler, isEventAdded]);

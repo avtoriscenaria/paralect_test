@@ -19,7 +19,15 @@
     .link {
       padding: 0 30px;
       text-decoration: none;
-      color: $defaultTheme;
+      color: $text;
+
+      &.selected {
+        color: $defaultTheme;
+      }
+      &:hover {
+        text-decoration: underline;
+        color: $defaultTheme;
+      }
     }
 
     .homeLink {

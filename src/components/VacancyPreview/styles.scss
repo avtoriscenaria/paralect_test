@@ -1,4 +1,4 @@
-@import "../../../../assets//colors.scss";
+@import "../../assets/colors.scss";
 
 .vacancyPreviewContainer {
   max-width: 773px;
@@ -16,12 +16,13 @@
   }
 
   .infoWrapper {
-    label {
+    .label {
       font-size: 20px;
       font-weight: 600;
       color: $defaultTheme;
       margin-right: 12px;
       cursor: pointer;
+      text-decoration: none;
 
       &:hover {
         opacity: 0.8;

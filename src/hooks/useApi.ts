@@ -8,8 +8,14 @@ interface EndpointType {
 }
 
 interface PropTypes {
+  params?: {
+    [key: string]: string;
+  };
   query?: {
     [key: string]: string | undefined;
+  };
+  body?: {
+    [key: string]: any;
   };
 }
 
@@ -18,20 +24,22 @@ export const useApi = (enpoint: EndpointType) => {
   const { authToken } = useAuthContext();
 
   const request = useCallback(
-    async (params?: PropTypes) => {
-      const { query } = params || {};
+    async (reqData?: PropTypes) => {
+      const { query, params, body } = reqData || {};
       if (isLoading) {
         return;
       }
       setIsLoading(true);
-      const res = await fetch(makeUrl(enpoint.url, query), {
+      const res = await fetch(makeUrl(enpoint.url, params, query), {
         method: enpoint.method,
         headers: {
           "x-secret-key": SECRET_KEY_PARALECT,
           "X-Api-App-Id": SECRET_KEY,
+          "X-User-Type": "hr_user",
           "Content-Type": "application/x-www-form-urlencodedn",
-          //Authorization: `Bearer ${authToken}`,
+          Authorization: `Bearer ${authToken}`,
         },
+        body: body ? JSON.stringify(body) : undefined,
       }).then((res) => (res.ok ? res.json() : res));
 
       setIsLoading(false);
@@ -45,13 +53,20 @@ export const useApi = (enpoint: EndpointType) => {
 
 export const makeUrl = (
   url: string,
-  queryData?: { [key: string]: string | undefined }
+  params?: { [key: string]: string },
+  query?: { [key: string]: string | undefined }
 ) => {
-  let query = "";
-  if (queryData) {
-    for (const param in queryData) {
-      query += `${param}=${queryData[param]}&`;
+  let _url = url;
+  let link = "";
+  if (params) {
+    for (const param in params) {
+      _url = _url.replace(`:${param}`, params[param]);
     }
   }
-  return `${HOST}${url}${query ? "?" + query : ""}`;
+  if (query) {
+    for (const param in query) {
+      link += `${param}=${query[param]}&`;
+    }
+  }
+  return `${HOST}${_url}${link ? "?" + link : ""}`;
 };

@@ -1,17 +1,27 @@
 import { useState, useEffect, useCallback } from "react";
 import { LS_ALIAS, api } from "src/constants";
 import { useApi } from "src/hooks";
+import { FiltersProps } from "../interfaces";
+
+interface QueryTypes extends FiltersProps {
+  page?: string;
+  keyword?: string;
+  [key: string]: string | undefined;
+}
 
 export const useHome = () => {
   const [isMount, setIsMount] = useState(false);
   const [data, setData] = useState(null);
   const [restInfo, setRestInfo] = useState<any>(null);
+  const [queryData, setQueryData] = useState<QueryTypes>({});
   const [favorites, setFavorites] = useState<{ [key: string]: string }>({});
   const { request, isLoading } = useApi(api.vacancies.getVacancies);
 
   const getVacancies = useCallback(
-    async (page?: string) => {
-      const { objects, ..._restInfo } = await request({ query: { page } });
+    async (query: QueryTypes = {}) => {
+      const { objects, ..._restInfo } = await request({
+        query,
+      });
       setData(objects);
       setRestInfo(_restInfo);
     },
@@ -41,11 +51,21 @@ export const useHome = () => {
   };
 
   const onChangePage = (page: number) => {
-    getVacancies(`${page - 1}`);
+    const updatedQueryData = { ...queryData, page: `${page - 1}` };
+    setQueryData(updatedQueryData);
+    getVacancies(updatedQueryData);
   };
 
   const onSubmitFilters = (filters: any) => {
-    console.log("FILTERS", filters);
+    const updatedQueryData = { ...queryData, ...filters };
+    setQueryData(updatedQueryData);
+    getVacancies(updatedQueryData);
+  };
+
+  const onSubmitSearch = (search: string) => {
+    const updatedQueryData = { ...queryData, keyword: search };
+    setQueryData(updatedQueryData);
+    getVacancies(updatedQueryData);
   };
 
   return {
@@ -57,5 +77,6 @@ export const useHome = () => {
     onChangePage,
     isMount,
     onSubmitFilters,
+    onSubmitSearch,
   };
 };

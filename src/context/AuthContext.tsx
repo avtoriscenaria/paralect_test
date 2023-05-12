@@ -37,21 +37,24 @@ export const AuthContextProvider = ({
   const [isFetching, setIsFetching] = useState(false);
   const authQuery = useMemo(
     () =>
-      makeUrl(api.auth.login.url, {
-        login: LOGIN,
-        password: PASSWORD,
-        client_id: CLIENT_ID,
-        client_secret: SECRET_KEY,
-      }),
+      makeUrl(
+        api.auth.login.url,
+        {},
+        {
+          login: LOGIN,
+          password: PASSWORD,
+          client_id: CLIENT_ID,
+          client_secret: SECRET_KEY,
+        }
+      ),
     []
   );
   const fetchAuthToken = useCallback(async () => {
+    setIsFetching(true);
     const authData = localStorage.getItem(LS_ALIAS.auth_data);
-
     if (authData) {
       setAuthToken(JSON.parse(authData).access_token);
     } else {
-      setIsFetching(true);
       const res = await fetch(authQuery, {
         method: api.auth.login.method,
         headers: {
@@ -65,8 +68,8 @@ export const AuthContextProvider = ({
         localStorage.setItem(LS_ALIAS.auth_data, JSON.stringify(res));
         setAuthToken(res.access_token);
       }
-      setIsFetching(false);
     }
+    setIsFetching(false);
   }, [authQuery]);
 
   useEffect(() => {

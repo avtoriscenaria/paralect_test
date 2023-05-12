@@ -1,5 +1,5 @@
-import { Filters, VacancyPreview } from "./components";
-import { Loader, Search } from "src/components";
+import { Filters } from "./components";
+import { Loader, Search, VacancyPreview } from "src/components";
 import "./styles.scss";
 import { getTranslations } from "src/constants/translations";
 import { useHome } from "./hooks/useHome";
@@ -15,6 +15,7 @@ export const Home = () => {
     restInfo,
     onChangePage,
     onSubmitFilters,
+    onSubmitSearch,
   } = useHome();
 
   return (
@@ -25,6 +26,7 @@ export const Home = () => {
           className="search"
           placeholder={t.vacancySearchPlaceholder}
           submitlabel={t.search}
+          onSubmit={onSubmitSearch}
         />
         <div className="vacanсiesList">
           {isLoading ? (

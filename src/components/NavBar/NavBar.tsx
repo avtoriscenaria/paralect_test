@@ -1,10 +1,12 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { getTranslations } from "src/constants/translations";
 import joboLogo from "src/assets/joboLogo.png";
 import "./styles.scss";
 
 export const NavBar = () => {
   const t = getTranslations();
+  const { pathname } = useLocation();
+
   return (
     <div className="navBarContainer">
       <div className="navBarWrapper">
@@ -14,10 +16,20 @@ export const NavBar = () => {
             {t.companyName}
           </div>
         </Link>
-        <Link to="/vacancies/123" className="link">
+        <Link
+          to="/"
+          className={`link${
+            pathname.includes("vacancies") || pathname === "/"
+              ? " selected"
+              : ""
+          }`}
+        >
           {t.vacancySearch}
         </Link>
-        <Link to="/favorite" className="link">
+        <Link
+          to="/favorite"
+          className={`link${pathname.includes("favorite") ? " selected" : ""}`}
+        >
           {t.favorite}
         </Link>
       </div>

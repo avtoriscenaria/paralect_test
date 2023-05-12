@@ -1,15 +1,18 @@
+import { useState } from "react";
+import { Link } from "react-router-dom";
+import { IconStar } from "@tabler/icons-react";
+import location from "src/assets/location.png";
+import { getSalaryString } from "../../pages/Home/helpers";
 import { getTranslations } from "src/constants/translations";
 import "./styles.scss";
-import location from "src/assets/location.png";
-import { IconStar } from "@tabler/icons-react";
-import { useState } from "react";
 
 interface PropTypes {
+  id: number | string;
   profession: string;
   firm_name: string;
-  town: { title: string };
+  town?: { title: string };
   catalogues: { title: string }[];
-  type_of_work: { title: string };
+  type_of_work?: { title: string };
   payment_to: number;
   payment_from: number;
   currency: string;
@@ -19,17 +22,18 @@ interface PropTypes {
 
 export const VacancyPreview = ({
   profession,
-  firm_name,
-  town: { title: townTitle },
-  catalogues,
-  type_of_work: { title: typeOfWork },
+  town,
+  type_of_work,
   payment_to,
   payment_from,
   currency,
   initFavorite,
   changeFavorite,
+  id: vacancyId,
 }: PropTypes) => {
-  const [{ title: catalogueTitle }] = catalogues;
+  const { title: townTitle } = town || {};
+  const { title: typeOfWork } = type_of_work || {};
+
   const [favorite, setFavorite] = useState(initFavorite);
   const t = getTranslations();
 
@@ -41,14 +45,12 @@ export const VacancyPreview = ({
   return (
     <div className="vacancyPreviewContainer">
       <div className="infoWrapper">
-        <label>{profession}</label>
+        <Link to={`vacancies/${vacancyId}`} className="label">
+          {profession}
+        </Link>
         <p>
-          <b>{`${t.sallaryShort} ${
-            payment_to
-              ? `${payment_from}-${payment_to}`
-              : `${t.from.toLowerCase()} ${payment_from}`
-          } ${currency}`}</b>
-          •<span>{typeOfWork}</span>
+          <b>{getSalaryString(t, payment_from, payment_to, currency)}</b>•
+          <span>{typeOfWork}</span>
         </p>
         <div className="locationWrapper">
           <img src={location} alt="" width={20} height={20} />

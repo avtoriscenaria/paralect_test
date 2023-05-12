@@ -1,14 +1,14 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useMemo } from "react";
 import { api } from "src/constants";
 import { useApi } from "src/hooks";
+import { FiltersProps } from "../interfaces";
 
 export const useFilters = () => {
   const [isMount, setIsMount] = useState(false);
   const { request, isLoading } = useApi(api.catalogues.getCatalogues);
   const [catalogues, setCatalogues] = useState(null);
-  const [selectedCatalogue, setCatalogue] = useState<string>();
-  const [fromSalary, setFromSalary] = useState();
-  const [toSalary, setToSalary] = useState();
+  const [initData, setInitData] = useState<FiltersProps>({});
+  const [filtersData, setFiltersData] = useState<FiltersProps>({});
 
   const getCatalogues = useCallback(async () => {
     const data = await request();
@@ -27,20 +27,40 @@ export const useFilters = () => {
     }
   }, [getCatalogues, isMount]);
 
-  const onClean = () => {
-    setCatalogue(undefined);
-    setFromSalary(undefined);
-    setToSalary(undefined);
+  const onChange = (name: string, value: string) => {
+    setFiltersData({ ...filtersData, [name]: value });
   };
+
+  const onClean = () => {
+    setFiltersData({});
+    setInitData({});
+  };
+
+  const changeInitData = () => {
+    setInitData(filtersData);
+  };
+
+  const isNoChanges = useMemo(
+    () =>
+      filtersData.catalogues === initData.catalogues &&
+      filtersData.payment_from === initData.payment_from &&
+      filtersData.payment_to === initData.payment_to,
+    [
+      filtersData.catalogues,
+      filtersData.payment_from,
+      filtersData.payment_to,
+      initData.catalogues,
+      initData.payment_from,
+      initData.payment_to,
+    ]
+  );
 
   return {
     catalogues: catalogues || [],
-    selectedCatalogue,
-    setCatalogue,
-    fromSalary,
-    setFromSalary,
-    toSalary,
-    setToSalary,
+    onChange,
+    filtersData,
     onClean,
+    isNoChanges,
+    changeInitData,
   };
 };
