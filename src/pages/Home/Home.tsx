@@ -9,7 +9,7 @@ export const Home = () => {
   const t = getTranslations();
   const {
     data,
-    changeFavorite,
+    changeFavorites,
     favorites,
     isLoading,
     restInfo,
@@ -36,7 +36,7 @@ export const Home = () => {
               <VacancyPreview
                 key={vacancy.id}
                 {...vacancy}
-                changeFavorite={(value) => changeFavorite(vacancy.id, value)}
+                changeFavorite={changeFavorites}
                 initFavorite={favorites[vacancy.id]}
               />
             ))

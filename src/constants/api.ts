@@ -7,7 +7,6 @@ export const api = {
   vacancies: {
     getVacancies: { url: "/vacancies", method: "GET" },
     getVacancie: { url: "/vacancies/:id", method: "GET" },
-    getFavorite: { url: "/vacancies", method: "POST" },
   },
   catalogues: {
     getCatalogues: { url: "/catalogues", method: "GET" },

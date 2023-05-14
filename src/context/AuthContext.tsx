@@ -17,6 +17,7 @@ import {
   api,
 } from "src/constants";
 import { makeUrl } from "src/hooks/useApi";
+import "./styles.scss";
 
 interface PropTypes {
   authToken?: string;
@@ -85,7 +86,9 @@ export const AuthContextProvider = ({
         authToken,
       }}
     >
-      {authToken ? children : <Loader />}
+      <div className="contextContainer">
+        {authToken ? children : <Loader />}
+      </div>
     </AuthContext.Provider>
   );
 };

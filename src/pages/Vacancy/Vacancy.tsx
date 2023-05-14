@@ -1,19 +1,29 @@
-import { VacancyPreview } from "src/components";
+import { Loader, VacancyPreview } from "src/components";
 import { useVacancy } from "./hooks/useVacancy";
 import "./styles.scss";
 
 export const Vacancy = () => {
-  const { vacancy } = useVacancy();
+  const { vacancy, isLoading, changeFavorite, initFavorite } = useVacancy();
   return (
     <div className="vacancyContainer">
       <VacancyPreview
         {...vacancy}
-        changeFavorite={(value) => console.log("v", value)}
+        changeFavorite={changeFavorite}
+        isLoading={isLoading}
+        disableLink
+        initFavorite={initFavorite}
       />
-      <div
-        className="vacancyDescription"
-        dangerouslySetInnerHTML={{ __html: vacancy.vacancyRichText }}
-      />
+
+      {isLoading ? (
+        <div className="vacancyDescription">
+          <Loader />
+        </div>
+      ) : (
+        <div
+          className="vacancyDescription"
+          dangerouslySetInnerHTML={{ __html: vacancy.vacancyRichText }}
+        />
+      )}
     </div>
   );
 };

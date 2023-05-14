@@ -1,3 +1,9 @@
+import "./styles.scss";
+
 export const Loader = () => {
-  return <div>Loading...</div>;
+  return (
+    <div className="loaderContainer">
+      <div className="loader" />
+    </div>
+  );
 };

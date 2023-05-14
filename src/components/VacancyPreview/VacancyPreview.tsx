@@ -5,19 +5,23 @@ import location from "src/assets/location.png";
 import { getSalaryString } from "../../pages/Home/helpers";
 import { getTranslations } from "src/constants/translations";
 import "./styles.scss";
+import { Loader } from "../Loader";
 
-interface PropTypes {
+export interface IFavorite {
   id: number | string;
   profession: string;
-  firm_name: string;
-  town?: { title: string };
-  catalogues: { title: string }[];
-  type_of_work?: { title: string };
+  town?: { title?: string };
+  type_of_work?: { title?: string };
   payment_to: number;
   payment_from: number;
   currency: string;
+}
+
+interface PropTypes extends IFavorite {
   initFavorite: boolean;
-  changeFavorite: (favorite: boolean) => void;
+  changeFavorite: (favoriteData: IFavorite) => void;
+  isLoading?: boolean;
+  disableLink?: boolean;
 }
 
 export const VacancyPreview = ({
@@ -30,40 +34,62 @@ export const VacancyPreview = ({
   initFavorite,
   changeFavorite,
   id: vacancyId,
+  isLoading,
+  disableLink,
 }: PropTypes) => {
   const { title: townTitle } = town || {};
   const { title: typeOfWork } = type_of_work || {};
-
   const [favorite, setFavorite] = useState(initFavorite);
   const t = getTranslations();
 
   const _changeFavorite = () => {
-    changeFavorite(!favorite);
+    changeFavorite({
+      id: `${vacancyId}`,
+      profession,
+      payment_from,
+      payment_to,
+      currency,
+      type_of_work: { title: typeOfWork },
+      town: { title: townTitle },
+    });
     setFavorite(!favorite);
   };
 
   return (
     <div className="vacancyPreviewContainer">
-      <div className="infoWrapper">
-        <Link to={`vacancies/${vacancyId}`} className="label">
-          {profession}
-        </Link>
-        <p>
-          <b>{getSalaryString(t, payment_from, payment_to, currency)}</b>•
-          <span>{typeOfWork}</span>
-        </p>
-        <div className="locationWrapper">
-          <img src={location} alt="" width={20} height={20} />
-          {townTitle}
-        </div>
-      </div>
-      <div className="iconWrapper">
-        <IconStar
-          className={`${favorite ? "selected" : ""}`}
-          size="22px"
-          onClick={_changeFavorite}
-        />
-      </div>
+      {isLoading ? (
+        <Loader />
+      ) : (
+        <>
+          <div className="infoWrapper">
+            <div className={`label${disableLink ? " disabled" : ""}`}>
+              {disableLink ? (
+                profession
+              ) : (
+                <Link className="link" to={`/vacancies/${vacancyId}`}>
+                  {profession}
+                </Link>
+              )}
+            </div>
+
+            <p>
+              <b>{getSalaryString(t, payment_from, payment_to, currency)}</b>•
+              <span>{typeOfWork}</span>
+            </p>
+            <div className="locationWrapper">
+              <img src={location} alt="" width={20} height={20} />
+              {townTitle}
+            </div>
+          </div>
+          <div className="iconWrapper">
+            <IconStar
+              className={`${favorite ? "selected" : ""}`}
+              size="22px"
+              onClick={_changeFavorite}
+            />
+          </div>
+        </>
+      )}
     </div>
   );
 };

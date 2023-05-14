@@ -2,6 +2,8 @@ import { useState, useEffect, useCallback } from "react";
 import { LS_ALIAS, api } from "src/constants";
 import { useApi } from "src/hooks";
 import { FiltersProps } from "../interfaces";
+import { IFavorite } from "src/components/VacancyPreview";
+import { changeFavorites } from "src/helpers";
 
 interface QueryTypes extends FiltersProps {
   page?: string;
@@ -14,7 +16,7 @@ export const useHome = () => {
   const [data, setData] = useState(null);
   const [restInfo, setRestInfo] = useState<any>(null);
   const [queryData, setQueryData] = useState<QueryTypes>({});
-  const [favorites, setFavorites] = useState<{ [key: string]: string }>({});
+  const [favorites, setFavorites] = useState<IFavorite[]>();
   const { request, isLoading } = useApi(api.vacancies.getVacancies);
 
   const getVacancies = useCallback(
@@ -39,14 +41,8 @@ export const useHome = () => {
     }
   }, [getVacancies, isMount]);
 
-  const changeFavorite = (vacancyId: string, value: boolean) => {
-    const updatedFavorite = favorites;
-    if (value) {
-      updatedFavorite[vacancyId] = vacancyId;
-    } else {
-      delete updatedFavorite[vacancyId];
-    }
-    localStorage.setItem(LS_ALIAS.favorites, JSON.stringify(updatedFavorite));
+  const _changeFavorites = (favoriteData: IFavorite) => {
+    const updatedFavorite = changeFavorites(favoriteData, favorites || []);
     setFavorites(updatedFavorite);
   };
 
@@ -70,8 +66,8 @@ export const useHome = () => {
 
   return {
     data: data || [],
-    changeFavorite,
-    favorites,
+    changeFavorites: _changeFavorites,
+    favorites: favorites || [],
     isLoading,
     restInfo,
     onChangePage,

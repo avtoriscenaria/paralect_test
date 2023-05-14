@@ -1,32 +1,32 @@
 import { useEffect, useState, useCallback } from "react";
-import { LS_ALIAS, api } from "src/constants";
-import { useApi } from "src/hooks";
+import { IFavorite } from "src/components/VacancyPreview";
+import { LS_ALIAS } from "src/constants";
 
 export const useFavorite = () => {
   const [isMount, setIsMount] = useState(false);
-  const { request } = useApi(api.vacancies.getFavorite);
-  const [favorite, setFavorite] = useState<string[]>();
+  const [favorites, setFavorites] = useState<IFavorite[]>();
 
-  const getFavorite = useCallback(
-    async (_favorite: string[]) => {
-      console.log("fav", _favorite);
-      const data = await request({});
-      console.log("data", data);
-    },
-    [request]
-  );
+  const getFavorite = useCallback(async () => {
+    const _favorites = localStorage.getItem(LS_ALIAS.favorites);
+    if (_favorites) {
+      setFavorites(JSON.parse(_favorites));
+    }
+  }, []);
 
   useEffect(() => {
     if (!isMount) {
       setIsMount(true);
-      const data = localStorage.getItem(LS_ALIAS.favorites);
-      if (data) {
-        const _favorite = Object.keys(JSON.parse(data));
-        setFavorite(_favorite);
-        getFavorite(_favorite);
-      }
+      getFavorite();
     }
   }, [getFavorite, isMount]);
 
-  return {};
+  const changeFavorite = (favoriteData: IFavorite) => {
+    const updatedFavorits = favorites?.filter(
+      ({ id }: IFavorite) => id !== favoriteData.id
+    );
+    setFavorites(updatedFavorits);
+    localStorage.setItem(LS_ALIAS.favorites, JSON.stringify(updatedFavorits));
+  };
+
+  return { favorites: favorites || [], changeFavorite };
 };
