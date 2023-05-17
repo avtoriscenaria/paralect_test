@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 import { HOST, SECRET_KEY, SECRET_KEY_PARALECT } from "src/constants";
 import { useAuthContext } from "src/context/AuthContext";
 
@@ -45,7 +45,7 @@ export const useApi = (enpoint: EndpointType) => {
       setIsLoading(false);
       return res;
     },
-    [enpoint.method, enpoint.url, isLoading]
+    [authToken, enpoint.method, enpoint.url, isLoading]
   );
 
   return { request, isLoading };

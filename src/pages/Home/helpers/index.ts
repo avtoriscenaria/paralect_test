@@ -1,5 +1,5 @@
 export const getSalaryString = (
-  t: any,
+  t: { from: string; to: string; sallaryShort: string },
   payment_from?: number,
   payment_to?: number,
   currency?: string

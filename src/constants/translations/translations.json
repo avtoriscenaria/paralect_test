@@ -12,5 +12,7 @@
   "apply": "Применить",
   "vacancySearchPlaceholder": "Введите название вакансии",
   "sallaryShort": "з/п",
-  "search": "Поиск"
+  "search": "Поиск",
+  "emptyDataLabel": "Упс, здесь еще ничего нет!",
+  "errorPageLabel": "Как ты сюда попал???"
 }

@@ -1,5 +1,3 @@
 export { Loader } from "./Loader";
-export { NavBar } from "./NavBar";
 export { Search } from "./Search";
 export { Selector } from "./Selector";
-export { VacancyPreview } from "./VacancyPreview";

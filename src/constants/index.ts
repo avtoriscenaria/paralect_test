@@ -1,5 +1,7 @@
 export { api, HOST } from "./api";
 
+//@ts-ignore
+export const PUBLIC_URL: string = process.env.PUBLIC_URL || "/";
 // @ts-ignore
 export const LOGIN: string = process.env.REACT_APP_LOGIN;
 // @ts-ignore

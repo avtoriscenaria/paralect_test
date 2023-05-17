@@ -5,7 +5,7 @@ import { FiltersProps } from "../interfaces";
 
 export const useFilters = () => {
   const [isMount, setIsMount] = useState(false);
-  const { request, isLoading } = useApi(api.catalogues.getCatalogues);
+  const { request } = useApi(api.catalogues.getCatalogues);
   const [catalogues, setCatalogues] = useState(null);
   const [initData, setInitData] = useState<FiltersProps>({});
   const [filtersData, setFiltersData] = useState<FiltersProps>({});

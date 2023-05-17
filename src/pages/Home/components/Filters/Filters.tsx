@@ -53,14 +53,14 @@ export const Filters = ({ onSubmit }: PropTypes) => {
           data={salaries}
           placeholder={t.from}
           searchValue={filtersData.payment_from || ""}
-          onChange={(v: any) => onChange("payment_from", v)}
+          onChange={(v: string) => onChange("payment_from", v)}
         />
         <Select
           className="priceSelector"
           data={salaries}
           placeholder={t.to}
           searchValue={filtersData.payment_to || ""}
-          onChange={(v: any) => onChange("payment_to", v)}
+          onChange={(v: string) => onChange("payment_to", v)}
         />
       </div>
       <Button

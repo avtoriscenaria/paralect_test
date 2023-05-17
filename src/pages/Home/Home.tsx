@@ -1,9 +1,11 @@
 import { Filters } from "./components";
-import { Loader, Search, VacancyPreview } from "src/components";
-import "./styles.scss";
+import { Loader, Search } from "src/components";
 import { getTranslations } from "src/constants/translations";
 import { useHome } from "./hooks/useHome";
 import { Pagination } from "@mantine/core";
+import "./styles.scss";
+import { VacancyPreview } from "src/views";
+import { IFavorite } from "src/views/VacancyPreview";
 
 export const Home = () => {
   const t = getTranslations();
@@ -13,26 +15,24 @@ export const Home = () => {
     favorites,
     isLoading,
     restInfo,
-    onChangePage,
-    onSubmitFilters,
-    onSubmitSearch,
+    onUpdateRequestData,
   } = useHome();
 
   return (
     <div className="homeContainer">
-      <Filters onSubmit={onSubmitFilters} />
+      <Filters onSubmit={onUpdateRequestData("filters")} />
       <div className="vacanciesWrapper">
         <Search
           className="search"
           placeholder={t.vacancySearchPlaceholder}
           submitlabel={t.search}
-          onSubmit={onSubmitSearch}
+          onSubmit={onUpdateRequestData("search")}
         />
         <div className="vacanсiesList">
           {isLoading ? (
             <Loader />
           ) : (
-            data.map((vacancy: any) => (
+            data.map((vacancy: IFavorite) => (
               <VacancyPreview
                 key={vacancy.id}
                 {...vacancy}
@@ -46,7 +46,7 @@ export const Home = () => {
           <div className="paginationWrapper">
             <Pagination
               total={Math.ceil(restInfo?.total / 20)}
-              onChange={onChangePage}
+              onChange={onUpdateRequestData("page")}
             />
           </div>
         ) : null}

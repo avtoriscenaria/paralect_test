@@ -5,7 +5,7 @@ import location from "src/assets/location.png";
 import { getSalaryString } from "../../pages/Home/helpers";
 import { getTranslations } from "src/constants/translations";
 import "./styles.scss";
-import { Loader } from "../Loader";
+import { Loader } from "../../components/Loader";
 
 export interface IFavorite {
   id: number | string;

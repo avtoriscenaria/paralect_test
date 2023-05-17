@@ -2,6 +2,7 @@ import { Link, useLocation } from "react-router-dom";
 import { getTranslations } from "src/constants/translations";
 import joboLogo from "src/assets/joboLogo.png";
 import "./styles.scss";
+import { PUBLIC_URL } from "src/constants";
 
 export const NavBar = () => {
   const t = getTranslations();
@@ -10,16 +11,16 @@ export const NavBar = () => {
   return (
     <div className="navBarContainer">
       <div className="navBarWrapper">
-        <Link to="/paralect_test/" className="homeLink">
+        <Link to={`${PUBLIC_URL}`} className="homeLink">
           <div className="homeLinkElement">
             <img src={joboLogo} alt="logo" />
             {t.companyName}
           </div>
         </Link>
         <Link
-          to="/paralect_test/"
+          to={`${PUBLIC_URL}`}
           className={`link${
-            pathname.includes("vacancies") || pathname === "/"
+            pathname.includes("vacancies") || pathname === `${PUBLIC_URL}`
               ? " selected"
               : ""
           }`}
@@ -27,7 +28,7 @@ export const NavBar = () => {
           {t.vacancySearch}
         </Link>
         <Link
-          to="/paralect_test/favorite"
+          to={`${PUBLIC_URL}/favorite`}
           className={`link${pathname.includes("favorite") ? " selected" : ""}`}
         >
           {t.favorite}

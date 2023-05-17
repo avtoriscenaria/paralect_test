@@ -1,5 +1,6 @@
-import { Loader, VacancyPreview } from "src/components";
+import { Loader } from "src/components";
 import { useVacancy } from "./hooks/useVacancy";
+import { VacancyPreview } from "src/views";
 import "./styles.scss";
 
 export const Vacancy = () => {

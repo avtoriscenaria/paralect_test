@@ -1,4 +1,4 @@
-import { IFavorite } from "src/components/VacancyPreview";
+import { IFavorite } from "src/views/VacancyPreview";
 import { LS_ALIAS } from "src/constants";
 
 export const changeFavorites = (
@@ -13,7 +13,14 @@ export const changeFavorites = (
   } else {
     updatedFavorite = [...updatedFavorite, favoriteData];
   }
-  console.log("UPD", updatedFavorite);
   localStorage.setItem(LS_ALIAS.favorites, JSON.stringify(updatedFavorite));
   return updatedFavorite;
+};
+
+export const favoriteArrDataToObject = (data: { id: string }[]) => {
+  const object: { [key: string]: boolean } = {};
+  for (const item of data) {
+    object[item.id] = true;
+  }
+  return object;
 };

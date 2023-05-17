@@ -1,20 +1,43 @@
-import { VacancyPreview } from "src/components";
+import { Loader } from "src/components";
+import { Pagination } from "@mantine/core";
 import { useFavorite } from "./hooks/useFavorite";
-import { IFavorite } from "src/components/VacancyPreview";
+import { VacancyPreview } from "src/views";
+import { EmptyData } from "./components";
+import { IFavorite } from "src/views/VacancyPreview";
 import "./styles.scss";
 
 export const Favorite = () => {
-  const { favorites, changeFavorite } = useFavorite();
+  const { favorites, changeFavorite, onChangePage, pageItems } = useFavorite();
+
   return (
     <div className="favoriteContainer">
-      {favorites.map((vacancy: IFavorite) => (
-        <VacancyPreview
-          initFavorite={true}
-          changeFavorite={changeFavorite}
-          key={vacancy.id}
-          {...vacancy}
-        />
-      ))}
+      <div className="pageItemsWrapper">
+        {favorites ? (
+          pageItems.length ? (
+            pageItems.map((vacancy: IFavorite) => (
+              <VacancyPreview
+                initFavorite={true}
+                changeFavorite={changeFavorite}
+                key={vacancy.id}
+                {...vacancy}
+              />
+            ))
+          ) : (
+            <EmptyData />
+          )
+        ) : (
+          <Loader />
+        )}
+      </div>
+
+      {(favorites?.length || 0) > 20 ? (
+        <div className="paginationWrapper">
+          <Pagination
+            total={Math.ceil((favorites?.length || 0) / 20)}
+            onChange={onChangePage}
+          />
+        </div>
+      ) : null}
     </div>
   );
 };
