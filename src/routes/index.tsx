@@ -4,19 +4,19 @@ import { Home, Favorite, Vacancy } from "src/pages";
 
 export const router = createBrowserRouter([
   {
-    path: "/",
+    path: "/paralect_test",
     Component: App,
     children: [
       {
-        path: "/",
+        path: "/paralect_test",
         Component: Home,
       },
       {
-        path: "vacancies/:vacancyId",
+        path: "/paralect_test/vacancies/:vacancyId",
         Component: Vacancy,
       },
       {
-        path: "favorite",
+        path: "/paralect_test/favorite",
         Component: Favorite,
       },
     ],

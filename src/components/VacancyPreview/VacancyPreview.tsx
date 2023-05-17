@@ -66,7 +66,10 @@ export const VacancyPreview = ({
               {disableLink ? (
                 profession
               ) : (
-                <Link className="link" to={`/vacancies/${vacancyId}`}>
+                <Link
+                  className="link"
+                  to={`/paralect_test/vacancies/${vacancyId}`}
+                >
                   {profession}
                 </Link>
               )}

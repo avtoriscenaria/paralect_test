@@ -10,14 +10,14 @@ export const NavBar = () => {
   return (
     <div className="navBarContainer">
       <div className="navBarWrapper">
-        <Link to="/" className="homeLink">
+        <Link to="/paralect_test/" className="homeLink">
           <div className="homeLinkElement">
             <img src={joboLogo} alt="logo" />
             {t.companyName}
           </div>
         </Link>
         <Link
-          to="/"
+          to="/paralect_test/"
           className={`link${
             pathname.includes("vacancies") || pathname === "/"
               ? " selected"
@@ -27,7 +27,7 @@ export const NavBar = () => {
           {t.vacancySearch}
         </Link>
         <Link
-          to="/favorite"
+          to="/paralect_test/favorite"
           className={`link${pathname.includes("favorite") ? " selected" : ""}`}
         >
           {t.favorite}
