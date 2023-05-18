@@ -17,9 +17,8 @@ export const useFavorite = () => {
 
   const getFavorite = useCallback(async () => {
     const _favorites = localStorage.getItem(LS_ALIAS.favorites);
-    if (_favorites) {
-      setFavorites(JSON.parse(_favorites));
-    }
+
+    setFavorites(_favorites ? JSON.parse(_favorites) : []);
   }, []);
 
   useEffect(() => {

@@ -27,4 +27,15 @@
       padding: 12px 0;
     }
   }
+
+  @media (max-width: 600px) {
+    flex-direction: column;
+    align-items: center;
+
+    .vacanciesWrapper {
+      margin-left: 0;
+      height: 100%;
+      width: 100%;
+    }
+  }
 }

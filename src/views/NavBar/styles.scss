@@ -20,6 +20,7 @@
       padding: 0 30px;
       text-decoration: none;
       color: $text;
+      text-align: center;
 
       &.selected {
         color: $defaultTheme;
@@ -45,6 +46,14 @@
           margin-right: 12px;
         }
       }
+    }
+  }
+
+  @media (max-width: 600px) {
+    padding: 0 4px;
+
+    .homeLink {
+      display: none;
     }
   }
 }

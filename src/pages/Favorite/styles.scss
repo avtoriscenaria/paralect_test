@@ -14,4 +14,10 @@
   .paginationWrapper {
     padding: 12px 0;
   }
+
+  @media (max-width: 600px) {
+    .pageItemsWrapper {
+      min-width: auto;
+    }
+  }
 }
