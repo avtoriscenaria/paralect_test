@@ -1,5 +1,5 @@
 import { useEffect, useState, useCallback, useMemo } from "react";
-import { IFavorite } from "src/views/VacancyPreview";
+import { IFavorite } from "src/components/Smart/VacancyPreview";
 import { LS_ALIAS } from "src/constants";
 
 export const useFavorite = () => {

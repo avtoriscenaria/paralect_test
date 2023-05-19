@@ -1,9 +1,9 @@
-import { Loader } from "src/components";
+import { Loader } from "src/components/UI";
 import { Pagination } from "@mantine/core";
 import { useFavorite } from "./hooks/useFavorite";
-import { VacancyPreview } from "src/views";
+import { VacancyPreview } from "src/components/Smart";
 import { EmptyData } from "./components";
-import { IFavorite } from "src/views/VacancyPreview";
+import { IFavorite } from "src/components/Smart/VacancyPreview";
 import "./styles.scss";
 
 export const Favorite = () => {

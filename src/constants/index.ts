@@ -13,6 +13,8 @@ export const SECRET_KEY: string = process.env.REACT_APP_SECRET_KEY;
 // @ts-ignore
 export const SECRET_KEY_PARALECT: string =
   process.env.REACT_APP_SECRET_KEY_PARALECT;
+// @ts-ignore
+export const ENV: string = process.env.REACT_APP_ENV;
 
 export const LS_ALIAS = {
   auth_data: "authData",
@@ -30,3 +32,10 @@ export const salaries = [
   "150000",
   "200000",
 ];
+
+export const HEADERS = {
+  "x-secret-key": SECRET_KEY_PARALECT,
+  "X-Api-App-Id": SECRET_KEY,
+  "X-User-Type": "hr_user",
+  "Content-Type": "application/x-www-form-urlencodedn",
+};

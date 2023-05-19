@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
 import { useParams } from "react-router-dom";
-import { IFavorite } from "src/views/VacancyPreview";
+import { IFavorite } from "src/components/Smart/VacancyPreview";
 import { LS_ALIAS, api } from "src/constants";
 import { changeFavorites } from "src/helpers";
 import { useApi } from "src/hooks";

@@ -1,11 +1,11 @@
 import { Filters } from "./components";
-import { Loader, Search } from "src/components";
+import { Loader, Search } from "src/components/UI";
 import { getTranslations } from "src/constants/translations";
 import { useHome } from "./hooks/useHome";
 import { Pagination } from "@mantine/core";
 import "./styles.scss";
-import { VacancyPreview } from "src/views";
-import { IFavorite } from "src/views/VacancyPreview";
+import { VacancyPreview } from "src/components/Smart";
+import { IFavorite } from "src/components/Smart/VacancyPreview";
 
 export const Home = () => {
   const t = getTranslations();

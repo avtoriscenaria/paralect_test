@@ -8,16 +8,11 @@
     flex: 1;
     overflow: auto;
     padding-bottom: 12px;
-    min-width: 773px;
+    max-width: 773px;
+    width: 100%;
   }
 
   .paginationWrapper {
     padding: 12px 0;
-  }
-
-  @media (max-width: 600px) {
-    .pageItemsWrapper {
-      min-width: auto;
-    }
   }
 }

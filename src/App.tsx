@@ -1,5 +1,5 @@
 import { Outlet } from "react-router-dom";
-import { NavBar } from "src/views";
+import { NavBar } from "src/components/Smart";
 import "./App.scss";
 
 export const App = () => {

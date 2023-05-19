@@ -6,9 +6,10 @@ import React, {
   useState,
   useCallback,
 } from "react";
-import { Loader } from "src/components";
+import { Loader } from "src/components/UI";
 import {
   CLIENT_ID,
+  ENV,
   LOGIN,
   LS_ALIAS,
   PASSWORD,
@@ -16,15 +17,22 @@ import {
   SECRET_KEY_PARALECT,
   api,
 } from "src/constants";
-import { makeUrl } from "src/hooks/useApi";
+import { makeUrl } from "src/helpers";
 import "./styles.scss";
 
 interface PropTypes {
   authToken?: string;
+  refreshToken?: string;
+  setAuthData: (data: IAuthTypes) => void;
+}
+
+interface IAuthTypes {
+  access_token: string;
+  refresh_token: string;
 }
 
 const defaultContext: PropTypes = {
-  authToken: "",
+  setAuthData: () => {},
 };
 
 const AuthContext = createContext(defaultContext);
@@ -34,7 +42,7 @@ export const AuthContextProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
-  const [authToken, setAuthToken] = useState("");
+  const [authData, setAuthData] = useState<IAuthTypes>();
   const [isFetching, setIsFetching] = useState(false);
   const authQuery = useMemo(
     () =>
@@ -54,41 +62,47 @@ export const AuthContextProvider = ({
     setIsFetching(true);
     const authData = localStorage.getItem(LS_ALIAS.auth_data);
     if (authData) {
-      setAuthToken(JSON.parse(authData).access_token);
+      setAuthData(JSON.parse(authData));
     } else {
-      const res = await fetch(authQuery, {
-        method: api.auth.login.method,
-        headers: {
-          "x-secret-key": SECRET_KEY_PARALECT,
-          "Content-Type": "application/x-www-form-urlencodedn",
-        },
-      }).then((res) => res.json());
+      let res = {
+        access_token: "access_token",
+        refresh_token: "refresh_token",
+      };
+      if (ENV !== "test") {
+        res = await fetch(authQuery, {
+          method: api.auth.login.method,
+          headers: {
+            "x-secret-key": SECRET_KEY_PARALECT,
+            "Content-Type": "application/x-www-form-urlencodedn",
+          },
+        }).then((res) => res.json());
+      }
 
       console.log("res!!!!!!!!!!!!", res);
       if (res.access_token) {
         localStorage.setItem(LS_ALIAS.auth_data, JSON.stringify(res));
-        setAuthToken(res.access_token);
+        setAuthData(res);
       }
     }
     setIsFetching(false);
   }, [authQuery]);
 
   useEffect(() => {
-    if (!isFetching && !authToken) {
+    if (!isFetching && !authData) {
       console.log("FETCH");
       fetchAuthToken();
     }
-  }, [authToken, fetchAuthToken, isFetching]);
+  }, [authData, fetchAuthToken, isFetching]);
 
   return (
     <AuthContext.Provider
       value={{
-        authToken,
+        authToken: authData?.access_token,
+        refreshToken: authData?.refresh_token,
+        setAuthData,
       }}
     >
-      <div className="contextContainer">
-        {authToken ? children : <Loader />}
-      </div>
+      <div className="contextContainer">{authData ? children : <Loader />}</div>
     </AuthContext.Provider>
   );
 };

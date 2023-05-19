@@ -1,6 +1,6 @@
-import { Loader } from "src/components";
+import { Loader } from "src/components/UI";
 import { useVacancy } from "./hooks/useVacancy";
-import { VacancyPreview } from "src/views";
+import { VacancyPreview } from "src/components/Smart";
 import "./styles.scss";
 
 export const Vacancy = () => {

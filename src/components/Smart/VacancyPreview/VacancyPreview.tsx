@@ -2,10 +2,10 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { IconStar } from "@tabler/icons-react";
 import location from "src/assets/location.png";
-import { getSalaryString } from "../../pages/Home/helpers";
+import { getSalaryString } from "src/helpers";
 import { getTranslations } from "src/constants/translations";
 import "./styles.scss";
-import { Loader } from "../../components/Loader";
+import { Loader } from "src/components/UI/Loader";
 
 export interface IFavorite {
   id: number | string;

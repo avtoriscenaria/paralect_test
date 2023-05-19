@@ -3,7 +3,7 @@ import { Select, Button } from "@mantine/core";
 import { IconX } from "@tabler/icons-react";
 import "./styles.scss";
 import { useFilters } from "src/pages/Home/hooks/useFilters";
-import { Selector } from "src/components";
+import { Selector } from "src/components/UI";
 import { salaries } from "src/constants";
 
 interface PropTypes {

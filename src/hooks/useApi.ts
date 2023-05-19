@@ -1,6 +1,14 @@
 import { useCallback, useState } from "react";
-import { HOST, SECRET_KEY, SECRET_KEY_PARALECT } from "src/constants";
+import {
+  CLIENT_ID,
+  ENV,
+  HEADERS,
+  LS_ALIAS,
+  SECRET_KEY,
+  api,
+} from "src/constants";
 import { useAuthContext } from "src/context/AuthContext";
+import { makeUrl } from "src/helpers";
 
 interface EndpointType {
   url: string;
@@ -21,7 +29,31 @@ interface PropTypes {
 
 export const useApi = (enpoint: EndpointType) => {
   const [isLoading, setIsLoading] = useState(false);
-  const { authToken } = useAuthContext();
+  const { authToken, refreshToken, setAuthData } = useAuthContext();
+
+  const refresh = useCallback(async () => {
+    const res = await fetch(
+      makeUrl(
+        api.auth.refresh.url,
+        {},
+        {
+          refresh_token: refreshToken,
+          client_id: CLIENT_ID,
+          client_secret: SECRET_KEY,
+        }
+      ),
+      {
+        method: api.auth.refresh.method,
+        headers: HEADERS,
+      }
+    ).then((res) => res);
+    if (res.ok) {
+      const authData = await res.json();
+      localStorage.setItem(LS_ALIAS.auth_data, JSON.stringify(authData));
+      setAuthData(authData);
+      return authData.access_token;
+    }
+  }, [refreshToken, setAuthData]);
 
   const request = useCallback(
     async (reqData?: PropTypes) => {
@@ -30,43 +62,54 @@ export const useApi = (enpoint: EndpointType) => {
         return;
       }
       setIsLoading(true);
-      const res = await fetch(makeUrl(enpoint.url, params, query), {
+      // Collect data for request
+      const _url = makeUrl(enpoint.url, params, query);
+      const headers: any = {
+        ...HEADERS,
+        Authorization: `Bearer ${authToken}`,
+      };
+      if (ENV === "test") {
+        delete headers.Authorization;
+      }
+      const initData = {
         method: enpoint.method,
-        headers: {
-          "x-secret-key": SECRET_KEY_PARALECT,
-          "X-Api-App-Id": SECRET_KEY,
-          "X-User-Type": "hr_user",
-          "Content-Type": "application/x-www-form-urlencodedn",
-          Authorization: `Bearer ${authToken}`,
-        },
+        headers,
         body: body ? JSON.stringify(body) : undefined,
-      }).then((res) => (res.ok ? res.json() : res));
+      };
+      // Fetching data
+      const res = await fetch(_url, initData).then(async (res) => {
+        if (res.ok) {
+          return res.json();
+        }
+        // If fetch failed and access_token expired, trying get new access_token via refresh_token-request
+        console.log("FAIL", res);
+        if (res.status === 410) {
+          console.log("RES 410");
+          const access_token = await refresh();
+          //Try again "main" request with the same data and new access_token
+          const res = await fetch(_url, {
+            ...initData,
+            headers: {
+              ...initData.headers,
+              Authorization: `Bearer ${access_token}`,
+            },
+          }).then((res) => {
+            if (res.ok) {
+              return res.json();
+            }
+            localStorage.removeItem(LS_ALIAS.auth_data);
+          });
+
+          return res;
+        }
+        localStorage.removeItem(LS_ALIAS.auth_data);
+      });
 
       setIsLoading(false);
       return res;
     },
-    [authToken, enpoint.method, enpoint.url, isLoading]
+    [authToken, enpoint.method, enpoint.url, isLoading, refresh]
   );
 
   return { request, isLoading };
-};
-
-export const makeUrl = (
-  url: string,
-  params?: { [key: string]: string },
-  query?: { [key: string]: string | undefined }
-) => {
-  let _url = url;
-  let link = "";
-  if (params) {
-    for (const param in params) {
-      _url = _url.replace(`:${param}`, params[param]);
-    }
-  }
-  if (query) {
-    for (const param in query) {
-      link += `${param}=${query[param]}&`;
-    }
-  }
-  return `${HOST}${_url}${link ? "?" + link : ""}`;
 };

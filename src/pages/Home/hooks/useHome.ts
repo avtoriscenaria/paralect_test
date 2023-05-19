@@ -2,7 +2,7 @@ import { useState, useEffect, useCallback } from "react";
 import { LS_ALIAS, api } from "src/constants";
 import { useApi } from "src/hooks";
 import { FiltersProps } from "../interfaces";
-import { IFavorite } from "src/views/VacancyPreview";
+import { IFavorite } from "src/components/Smart/VacancyPreview";
 import { changeFavorites, favoriteArrDataToObject } from "src/helpers";
 
 interface QueryTypes extends FiltersProps {

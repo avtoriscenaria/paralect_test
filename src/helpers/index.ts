@@ -1,5 +1,5 @@
-import { IFavorite } from "src/views/VacancyPreview";
-import { LS_ALIAS } from "src/constants";
+import { IFavorite } from "src/components/Smart/VacancyPreview";
+import { HOST, LS_ALIAS } from "src/constants";
 
 export const changeFavorites = (
   favoriteData: IFavorite,
@@ -23,4 +23,41 @@ export const favoriteArrDataToObject = (data: { id: string }[]) => {
     object[item.id] = true;
   }
   return object;
+};
+
+export const getSalaryString = (
+  t: { from: string; to: string; sallaryShort: string },
+  payment_from?: number,
+  payment_to?: number,
+  currency?: string
+) => {
+  let salaryString = "-";
+  if (payment_from && !payment_to) {
+    salaryString = `${t.from.toLowerCase()} ${payment_from}`;
+  } else if (!payment_from && payment_to) {
+    salaryString = `${t.to.toLowerCase()} ${payment_to}`;
+  } else if (payment_from && payment_to) {
+    salaryString = `${payment_from} - ${payment_to}`;
+  }
+  return `${t.sallaryShort} ${salaryString} ${currency}`;
+};
+
+export const makeUrl = (
+  url: string,
+  params?: { [key: string]: string },
+  query?: { [key: string]: string | undefined }
+) => {
+  let _url = url;
+  let link = "";
+  if (params) {
+    for (const param in params) {
+      _url = _url.replace(`:${param}`, params[param]);
+    }
+  }
+  if (query) {
+    for (const param in query) {
+      link += `${param}=${query[param]}&`;
+    }
+  }
+  return `${HOST}${_url}${link ? "?" + link : ""}`;
 };
