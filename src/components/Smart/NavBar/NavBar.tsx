@@ -18,9 +18,9 @@ export const NavBar = () => {
           </div>
         </Link>
         <Link
-          to={`${PUBLIC_URL}`}
+          to={`${PUBLIC_URL}/`}
           className={`link${
-            pathname.includes("vacancies") || pathname === `${PUBLIC_URL}`
+            pathname.includes("vacancies") || pathname === `${PUBLIC_URL}/`
               ? " selected"
               : ""
           }`}
