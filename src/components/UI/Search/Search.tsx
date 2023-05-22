@@ -21,6 +21,7 @@ export function InputWithButton({
 
   return (
     <TextInput
+      data-elem="search-input"
       icon={<IconSearch size="1.1rem" stroke={1.5} />}
       radius="xl"
       size="md"
@@ -28,6 +29,7 @@ export function InputWithButton({
       onChange={(e) => setValue(e.target.value)}
       rightSection={
         <Button
+          data-elem="search-button"
           radius="xl"
           color={theme.primaryColor}
           variant="filled"

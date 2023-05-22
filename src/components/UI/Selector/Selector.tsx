@@ -45,8 +45,12 @@ export const Selector = ({
     >
       {label ? <label>{label}</label> : null}
       <div className="selectorWrapper">
-        <div className="selectorLabel" onClick={() => setIsOpen(!isOpen)}>
-          {_selectedItem}
+        <div
+          data-elem="industry-select"
+          className="selectorLabel"
+          onClick={() => setIsOpen(!isOpen)}
+        >
+          <div className="selectorLabelText">{_selectedItem}</div>
           <div className="selectorArrow">
             <IconChevronDown />
           </div>

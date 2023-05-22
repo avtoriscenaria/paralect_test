@@ -22,7 +22,6 @@
       font-weight: 600;
       color: $defaultTheme;
       margin-right: 12px;
-      cursor: pointer;
       text-decoration: none;
 
       &:hover {
@@ -33,6 +32,9 @@
         opacity: 1;
         cursor: default;
       }
+    }
+    .label .link {
+      cursor: pointer;
     }
 
     p {

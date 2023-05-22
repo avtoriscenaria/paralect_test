@@ -56,7 +56,7 @@ export const VacancyPreview = ({
   };
 
   return (
-    <div className="vacancyPreviewContainer">
+    <div data-elem={`vacancy-${vacancyId}`} className="vacancyPreviewContainer">
       {isLoading ? (
         <Loader />
       ) : (
@@ -86,6 +86,7 @@ export const VacancyPreview = ({
           </div>
           <div className="iconWrapper">
             <IconStar
+              data-elem={`vacancy-${vacancyId}-shortlist-button`}
               className={`${favorite ? "selected" : ""}`}
               size="22px"
               onClick={_changeFavorite}

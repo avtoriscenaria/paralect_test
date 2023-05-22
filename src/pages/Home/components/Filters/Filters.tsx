@@ -49,6 +49,7 @@ export const Filters = ({ onSubmit }: PropTypes) => {
       <div className="priceSelectors">
         <label>{t.salary}</label>
         <Select
+          data-elem="salary-from-input"
           className="priceSelector"
           data={salaries}
           placeholder={t.from}
@@ -56,6 +57,7 @@ export const Filters = ({ onSubmit }: PropTypes) => {
           onChange={(v: string) => onChange("payment_from", v)}
         />
         <Select
+          data-elem="salary-to-input"
           className="priceSelector"
           data={salaries}
           placeholder={t.to}
@@ -64,6 +66,7 @@ export const Filters = ({ onSubmit }: PropTypes) => {
         />
       </div>
       <Button
+        data-elem="search-button"
         className="applyButton"
         disabled={isNoChanges}
         onClick={() => {
