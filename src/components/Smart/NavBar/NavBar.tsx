@@ -11,7 +11,7 @@ export const NavBar = () => {
   return (
     <div className="navBarContainer">
       <div className="navBarWrapper">
-        <Link to={`${PUBLIC_URL}`} className="homeLink">
+        <Link to={`${PUBLIC_URL}/`} className="homeLink">
           <div className="homeLinkElement">
             <img src={joboLogo} alt="logo" />
             {t.companyName}
